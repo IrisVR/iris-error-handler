@@ -28,6 +28,13 @@ module.exports = {
       error_message: 'The auth token is invalid or has expired'
     }
   },
+  103: {
+    meta: {
+      code: 103,
+      error_type: 'ApiKeyInvalid',
+      error_message: 'The API key is missing, is invalid, or was revoked'
+    }
+  },
   /* MongoDB Errors */
   150: {
     meta: {
@@ -35,6 +42,13 @@ module.exports = {
       error_type: 'ObjectIDInvalid',
       error_message: 'The id string is not a valid ObjectID'
     }
+  },
+  160: {
+    meta: {
+      code: 160,
+      error_type: 'NotFound',
+      error_message: 'The document does not exist in our database',
+    },
   },
   /* User errors */
   200: {
@@ -61,9 +75,16 @@ module.exports = {
   203: {
     meta: {
       code: 203,
-      error_type: 'UserNotFound',
+      error_type: 'UserEmailNotFound',
       error_message: 'The user with the specified email was not found'
     }
+  },
+  204: {
+    meta: {
+      code: 204,
+      error_type: 'UserIDNotFound',
+      error_message: 'The user with the specified Id was not found',
+    },
   },
   205: {
     meta: {
@@ -157,6 +178,27 @@ module.exports = {
       error_message: 'The project with the specified ID was not found'
     }
   },
+  330: {
+    meta: {
+      code: 330,
+      error_type: 'PublicCodeError',
+      error_message: 'The public sharing code is invalid, or the permission settings have changed'
+    }
+  },
+  331: {
+    meta: {
+      code: 331,
+      error_type: 'MissingEntriesField',
+      error_message: 'The request body must contain an entries field'
+    }
+  },
+  332: {
+    meta: {
+      code: 332,
+      error_type: 'InvalidEntriesFormat',
+      error_message: 'The entries value must be an array'
+    }
+  },  
   350: {
     meta: {
       code: 350,
@@ -178,6 +220,58 @@ module.exports = {
       error_message: 'At least one required field is missing'
     }
   },
+  /* Team errors */
+  400: {
+    meta: {
+      code: 400,
+      error_type: 'TeamNotFound',
+      error_message: 'The team was not found',
+    },
+  },
+  405: {
+    meta: {
+      code: 405,
+      error_type: 'CancellationError',
+      error_message: 'Either you do not have admin rights to perform this action, or the subscription does not exist',
+    },
+  },
+  /* Billing errors */
+  501: {
+    meta: {
+      code: 501,
+      error_type: 'EstimationError',
+      error_message: 'The plan ID or billing address was not provided or properly formatted',
+    },
+  },
+  /* Notification Errors */
+  601: {
+    meta: {
+      code: 601,
+      error_type: 'ParamNotFound',
+      error_message: 'A route parameter is required',
+    },
+  },
+  605: {
+    meta: {
+      code: 605,
+      error_type: 'TitleNotFound',
+      error_message: 'A notification title is required',
+    },
+  },
+  606: {
+    meta: {
+      code: 606,
+      error_type: 'MessageNotFound',
+      error_message: 'A notification message is required',
+    },
+  },
+  610: {
+    meta: {
+      code: 610,
+      error_type: 'NotificationNotFound',
+      error_message: 'The notification with the specified Id was not found',
+    },
+  },
   /* Third-party errors */
   1000: {
     meta: {
@@ -185,5 +279,12 @@ module.exports = {
       error_type: 'MandrillError',
       error_message: 'There was an error with the mandrill emailing service'
     }
-  }
+  },
+  1010: {
+    meta: {
+      code: 1010,
+      error_type: 'ChargebeeError',
+      error_message: 'There was an error with the Chargebee service',
+    },
+  },
 };
