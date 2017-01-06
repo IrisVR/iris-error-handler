@@ -3,7 +3,7 @@ Error handling middleware for IrisVR microservices.
 
 Compatible with Node.js + Express apps only, with an optional MongoDB backend.
 
-## Installation (TODO)
+## Installation (TODO: ACTUALLY PUBLISH ON NPM)
 ```
 $ npm install iris-error-handler --save
 ```
@@ -36,7 +36,7 @@ The error code acts as the key, while the value contains the meta payload to be 
 - **500 - 599**: Billing errors
 - **600 - 699**: Notification errors
 
-#### Example
+### Example
 ```javascript
 {
   ...
