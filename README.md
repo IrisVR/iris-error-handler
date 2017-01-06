@@ -62,11 +62,8 @@ Currying function that accepts an [Express response object](http://expressjs.com
 
 The error passed in must be one of two types:
 - A [Javascript Error](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error) in the form of `Error(X)`, where `X` denotes an Iris error code.
-- A [Mongoose Error](https://github.com/Automattic/mongoose/blob/4.7.6/lib/error.js) triggered by validators defined in the schema. 
 
-For mongoose errors, the handler will catch built-in errors _and/or_ custom validation methods. If you're using the latter, make sure you pass in the appropriate error code as an argument in the validation method. This can be seen in the example below.
-
-##### Example With Javascript Error
+##### Example
 ```javascript
 /**
  * route.js
@@ -83,7 +80,11 @@ const calculateNumber = (req, res) =>
     .catch(errorUtils.handleError(res));
 ```
 
-##### Example With Mongoose Error
+- A [Mongoose Error](https://github.com/Automattic/mongoose/blob/4.7.6/lib/error.js) triggered by validators defined in the schema. 
+
+For mongoose errors, the handler will catch built-in errors _and/or_ custom validation methods. If you're using the latter, make sure you pass in the appropriate error code as an argument in the validation method, as seen below:
+
+##### Example
 ```javascript
 /**
  * userModel.js
