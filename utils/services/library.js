@@ -1,24 +1,27 @@
-exports.handleMissingPanoField = (pano) => {
-  const panoCopy = pano.toObject();
+function isMissingProperty(pano) {
+  return (
+    !{}.hasOwnProperty.call(pano, 'owner') ||
+    !{}.hasOwnProperty.call(pano.owner, 'username') ||
+    !{}.hasOwnProperty.call(pano.owner, '_id') ||
+    !{}.hasOwnProperty.call(pano, 'format') ||
+    !{}.hasOwnProperty.call(pano, 'stereoscopic') ||
+    !{}.hasOwnProperty.call(pano, 'raw') ||
+    !{}.hasOwnProperty.call(pano.raw, 'aws_bucket') ||
+    !{}.hasOwnProperty.call(pano.raw, 'aws_key') ||
+    !{}.hasOwnProperty.call(pano.raw, 'aws_name') ||
+    !{}.hasOwnProperty.call(pano.raw, 'content_type') ||
+    !{}.hasOwnProperty.call(pano.raw, 'size') ||
+    !{}.hasOwnProperty.call(pano.raw, 'width') ||
+    !{}.hasOwnProperty.call(pano.raw, 'height') ||
+    !{}.hasOwnProperty.call(pano.raw, 'ext') ||
+    !{}.hasOwnProperty.call(pano.raw, 'url')
+  );
+}
 
-  if (
-    !{}.hasOwnProperty.call(panoCopy, 'owner') ||
-    !{}.hasOwnProperty.call(panoCopy.owner, 'username') ||
-    !{}.hasOwnProperty.call(panoCopy.owner, '_id') ||
-    !{}.hasOwnProperty.call(panoCopy, 'format') ||
-    !{}.hasOwnProperty.call(panoCopy, 'stereoscopic') ||
-    !{}.hasOwnProperty.call(panoCopy, 'raw') ||
-    !{}.hasOwnProperty.call(panoCopy.raw, 'aws_bucket') ||
-    !{}.hasOwnProperty.call(panoCopy.raw, 'aws_key') ||
-    !{}.hasOwnProperty.call(panoCopy.raw, 'aws_name') ||
-    !{}.hasOwnProperty.call(panoCopy.raw, 'content_type') ||
-    !{}.hasOwnProperty.call(panoCopy.raw, 'size') ||
-    !{}.hasOwnProperty.call(panoCopy.raw, 'width') ||
-    !{}.hasOwnProperty.call(panoCopy.raw, 'height') ||
-    !{}.hasOwnProperty.call(panoCopy.raw, 'ext') ||
-    !{}.hasOwnProperty.call(panoCopy.raw, 'url')
-  ) {
-    return Promise.reject(Error(370));
-  }
-  return Promise.resolve(pano);
-};
+exports.handleMissingPanoField = pano =>
+  new Promise((resolve, reject) => {
+    const panoCopy = pano.toObject();
+    return isMissingProperty(panoCopy)
+      ? reject(Error(370))
+      : resolve(pano);
+  });
