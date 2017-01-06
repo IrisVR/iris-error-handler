@@ -13,7 +13,7 @@ const mdb = require('./mongodb');
  */
 exports.handleError = res => (err) => {
   let code;
-  if (err.errors) code = mdb.handleMongoDBError(err);
+  if (err.errors) code = mdb.handleValidationError(err);
   else code = err.message;
   this.sendError(res, code);
 };
@@ -52,29 +52,11 @@ exports.validateOwner = user => document =>
   );
 
 /**
- * Helper for associating missing document types
- * with error codes.
- */
-function convertNotFoundCategoryToCode(category) {
-  const correspondingCodes = {
-    default: 160,
-    userEmail: 203,
-    userId: 204,
-    pano: 300,
-    panoset: 310,
-    project: 320,
-    publicSharingCode: 330,
-    notification: 610,
-  };
-  return correspondingCodes[category];
-}
-
-/**
  * Checks whether a document(s) exists in the DB.
  */
 exports.handleEntityNotFound = (entity, category = 'default') =>
   new Promise((resolve, reject) =>
     entity
       ? resolve(entity)
-      : reject(Error(convertNotFoundCategoryToCode(category)))
+      : reject(Error(mdb.getCorrespondingCode('notFound', category)))
   );

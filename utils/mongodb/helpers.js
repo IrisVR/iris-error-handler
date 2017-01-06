@@ -1,21 +1,16 @@
+const codes = require('./errorTypes');
+
 /**
- * Handler for `required field` errors
- * thrown by MongoDB
+ * Returns an error code based off the
+ * MongoDB error type and field provided
  */
-function handleMissingField(field) {
-  const correspondingCodes = {
-    username: 200,
-    password: 205,
-    full_name: 210
-  };
-  return correspondingCodes[field];
-}
+exports.getCorrespondingCode = (errorType, field) => codes[errorType][field];
 
 /**
  * Handler for all validation errors
  * thrown by MongoDB
  */
-exports.handleMongoDBError = (err) => {
+exports.handleValidationError = (err) => {
   /**
    * MongoDB returns _all_ validation errors.
    * We'll save these in an array in case we
@@ -29,8 +24,7 @@ exports.handleMongoDBError = (err) => {
   }
   const firstError = errors[0];
   let code;
-  if (firstError.kind === 'required') code = handleMissingField(firstError.path);
-
+  if (firstError.kind === 'required') code = this.getCorrespondingCode('requiredField', firstError.path);
   /**
    * If the error is not a `required field` error,
    * we will examine the `message` key to be our
