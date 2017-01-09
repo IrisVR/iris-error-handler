@@ -140,11 +140,10 @@ module.exports = mongoose.model('User', User);
  * route.js
  */
 const User = mongoose.model('User');
-const createUser = (req, res) => {
+const createUser = (req, res) =>
   User.create({ username: 'INVALID_EMAIL_FORMAT' })
     .then(u => res.send(u))
     .catch(errorUtils.handleError(res)); // Sends `201: UsernameInvalid`
-}
 ```
 
 #### sendError(res, code)
@@ -156,9 +155,8 @@ _This method should not be called directly_ as it is invoked by the wrapper meth
 
 ###### Example
 ```javascript
-const responder = (req, res) => {
+const responder = (req, res) =>
   errorUtils.sendError(res, 101);
-}
 ```
 
 ### MongoDB
@@ -189,13 +187,11 @@ An optional category argument can specify what type of document was(n't) found. 
 ###### Example
 ```javascript
 const User = mongoose.model('User');
-const getUser = (req, res) => {
-  const id = req.user._id;
-  User.findById(id)
+const getUser = (req, res) =>
+  User.findById(req.user._id)
     .then(u => errorUtils.handleEntityNotFound(u, 'userId'))
     .then(u => res.send(u))
     .catch(errorUtils.handleError(res)); // Sends `204: UserIDNotFound`
-}
 ```
 
 #### validateOwner(user)(document)
@@ -214,6 +210,7 @@ const updateDocument = (req, res) => {
     .then(errorUtils.validateOwner(user))
     .then(d => res.send(d))
     .catch(errorUtils.handleError(res)); // Sends `350: PermissionsError`
+}
 ```
 
 ## Contribution
