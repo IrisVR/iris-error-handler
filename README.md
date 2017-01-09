@@ -27,7 +27,7 @@ The error code acts as the key, while the value contains the meta payload to be 
 
 ### Organization
 - **-1**: Unknown error. This is the default error returned by the middleware if no error code is specified.
-- **1 - 99**: Third-party errors (!!!!!!TODO!!!!!!!)
+- **1 - 99**: Third-party errors
 - **100 - 149**: Request header errors
 - **150 - 199**: MongoDB errors
 - **200 - 299**: User / Password errors
@@ -110,7 +110,7 @@ const createUser = (req, res) => {
   const userWithoutPassword = { username: 'cookies@gmail.gov' };
   User.create(userWithoutPassword)
     .then(u => res.send(u))
-    .catch(errorUtils.handleError(res)); // Sends `205: PasswordIncorrect`
+    .catch(errorUtils.handleError(res)); // Sends `205: PasswordMissing`
 }
 ```
 
@@ -127,7 +127,7 @@ const User = new mongoose.Schema({
 });
 
 // Custom validator. Note that the second argument is an Iris error code.
-User.path('username').validate(callback, '201'); // 201 implies UsernameInvalid: The username is not a valid email format
+User.path('username').validate(callback, '201');
 
 function callback(value, respond) {
   return validator.isEmail(value)
@@ -165,7 +165,7 @@ const responder = (req, res) => {
 #### validateObjectID(id)
 Confirms whether a string is a valid Mongo [ObjectID](https://docs.mongodb.com/manual/reference/bson-types/#objectid); if so, the string is passed on to the next middleware.
 
-This method should be placed _directly before_ making database queries that involve document ID(s). If not properly accounted for, the server may throw a fatal error.
+This method should be placed _directly before_ making database queries that involve document ID(s).
 
 ###### Example
 ```javascript
