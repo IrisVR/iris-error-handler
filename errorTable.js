@@ -6,6 +6,23 @@ module.exports = {
       error_message: 'An unknown error occurred'
     }
   },
+
+  /* Third-party errors */
+  10: {
+    meta: {
+      code: 10,
+      error_type: 'MandrillError',
+      error_message: 'There was an error with the mandrill emailing service'
+    }
+  },
+  11: {
+    meta: {
+      code: 11,
+      error_type: 'ChargebeeError',
+      error_message: 'There was an error with the Chargebee service',
+    },
+  },
+
   /* Request header errors */
   100: {
     meta: {
@@ -35,6 +52,7 @@ module.exports = {
       error_message: 'The API key is missing, is invalid, or was revoked'
     }
   },
+
   /* MongoDB Errors */
   150: {
     meta: {
@@ -50,6 +68,7 @@ module.exports = {
       error_message: 'The document does not exist in our database',
     },
   },
+
   /* User errors */
   200: {
     meta: {
@@ -121,6 +140,7 @@ module.exports = {
       error_message: 'The full_name field is required'
     }
   },
+
   /* Pano errors */
   300: {
     meta: {
@@ -220,6 +240,7 @@ module.exports = {
       error_message: 'At least one required field is missing'
     }
   },
+
   /* Team errors */
   400: {
     meta: {
@@ -235,6 +256,7 @@ module.exports = {
       error_message: 'Either you do not have admin rights to perform this action, or the subscription does not exist',
     },
   },
+
   /* Billing errors */
   501: {
     meta: {
@@ -243,6 +265,7 @@ module.exports = {
       error_message: 'The plan ID or billing address was not provided or properly formatted',
     },
   },
+
   /* Notification Errors */
   601: {
     meta: {
@@ -270,21 +293,6 @@ module.exports = {
       code: 610,
       error_type: 'NotificationNotFound',
       error_message: 'The notification with the specified Id was not found',
-    },
-  },
-  /* Third-party errors */
-  1000: {
-    meta: {
-      code: 1000,
-      error_type: 'MandrillError',
-      error_message: 'There was an error with the mandrill emailing service'
-    }
-  },
-  1010: {
-    meta: {
-      code: 1010,
-      error_type: 'ChargebeeError',
-      error_message: 'There was an error with the Chargebee service',
     },
   },
 };
