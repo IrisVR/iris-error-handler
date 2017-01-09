@@ -1,4 +1,4 @@
 module.exports = Object.assign({},
-  require('./categories'),
+  require('./errorTypes'),
   require('./helpers')
 );
