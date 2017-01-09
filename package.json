@@ -1,0 +1,19 @@
+{
+  "name": "iris-error-codes",
+  "version": "1.0.0",
+  "description": "Resource for internal iris error codes",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IrisVR/iris-error-codes.git"
+  },
+  "author": "robin@irisvr.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/IrisVR/iris-error-codes/issues"
+  },
+  "homepage": "https://github.com/IrisVR/iris-error-codes#readme"
+}
