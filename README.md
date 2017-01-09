@@ -63,7 +63,7 @@ Currying function that accepts an [Express response object](http://expressjs.com
 The error passed in must be one of two types:
 - A [Javascript Error](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error) in the form of `Error(X)`, where `X` denotes an Iris error code.
 
-##### Example
+###### Example
 ```javascript
 /**
  * route.js
@@ -80,19 +80,19 @@ const calculateNumber = (req, res) =>
     .catch(errorUtils.handleError(res));
 ```
 
-- A [Mongoose Error](https://github.com/Automattic/mongoose/blob/4.7.6/lib/error.js) triggered by validators defined in the schema. 
+- A [Mongoose Error](https://github.com/Automattic/mongoose/blob/4.7.6/lib/error.js) triggered by validators defined in the schema. There are two types of mongoose errors that we support:
 
-For mongoose errors, the handler will catch built-in errors _and/or_ custom validation methods. If you're using the latter, make sure you pass in the appropriate error code as an argument in the validation method, as seen below:
+##### Required Field Error
+The required field validator comes out of the box when you define your schema. The actual error code you want to throw for specific missing fields can be configured [here](https://github.com/IrisVR/iris-error-handler/blob/master/utils/mongodb/errorTypes/requiredField.js).
 
-##### Example
+###### Example
 ```javascript
 /**
  * userModel.js
  */
 const User = new mongoose.Schema({
   username: {
-    type: String,
-    required: true // built-in validator
+    type: String
   },
   password: {
     type: String,
@@ -100,8 +100,35 @@ const User = new mongoose.Schema({
   }
 });
 
+module.exports = mongoose.model('User', User);
+
+/**
+ * route.js
+ */
+const User = mongoose.model('User');
+const createUser = (req, res) => {
+  const userWithoutPassword = { username: 'cookies@gmail.gov' };
+  User.create(userWithoutPassword)
+    .then(u => res.send(u))
+    .catch(errorUtils.handleError(res)); // Sends `205: PasswordIncorrect`
+}
+```
+
+##### Custom Validation Error
+You can set up custom validation on your schema using [`.validate(callback, [message])`](http://mongoosejs.com/docs/validation.html). If you do so, make sure to pass in the appropriate error code as the second argument.
+
+###### Custom Validation Example
+```javascript
+/**
+ * userModel.js
+ */
+const User = new mongoose.Schema({
+  username: String
+});
+
 // Custom validator. Note that the second argument is an Iris error code.
-User.path('username').validate(callback, '201');
+User.path('username').validate(callback, '201'); // 201 implies UsernameInvalid: The username is not a valid email format
+
 function callback(value, respond) {
   return validator.isEmail(value)
     ? respond(true) : respond(false);
@@ -114,10 +141,9 @@ module.exports = mongoose.model('User', User);
  */
 const User = mongoose.model('User');
 const createUser = (req, res) => {
-  const userWithoutPassword = { username: 'cookies@gmail.gov' }
-  User.create(userWithoutPassword)
+  User.create({ username: 'INVALID_EMAIL_FORMAT' })
     .then(u => res.send(u))
-    .catch(errorUtils.handleError(res)); // Sends `207: PasswordIncorrect`
+    .catch(errorUtils.handleError(res)); // Sends `201: UsernameInvalid`
 }
 ```
 
@@ -128,7 +154,7 @@ The client should always expect a successful `HTTP 200` status for errored respo
 
 _This method should not be called directly_ as it is invoked by the wrapper method [`handleError`](#handleerror-res--err-). However, it may be convenient to use in development.
 
-##### Example
+###### Example
 ```javascript
 const responder = (req, res) => {
   errorUtils.sendError(res, 101);
@@ -141,7 +167,7 @@ Confirms whether a string is a valid Mongo [ObjectID](https://docs.mongodb.com/m
 
 This method should be placed _directly before_ making database queries that involve document ID(s). If not properly accounted for, the server may throw a fatal error.
 
-##### Example
+###### Example
 ```javascript
 const User = mongoose.model('User');
 const getUser = (req, res) => {
@@ -160,7 +186,7 @@ This method should be placed _directly after_ a database query.
 
 An optional category argument can specify what type of document was(n't) found. If none is provided, the error will default to `160: NotFound`. A dictionary of supported category strings are available [here](https://github.com/IrisVR/iris-error-handler/blob/master/utils/mongodb/errorTypes/notFound.js).
 
-##### Example
+###### Example
 ```javascript
 const User = mongoose.model('User');
 const getUser = (req, res) => {
@@ -177,7 +203,7 @@ Confirms whether a user has access to a document; if so, the document is passed 
 
 This is a lesser used method that only applies to documents with an `owner.username` field, such as Panos in the Library service.
 
-##### Example
+###### Example
 ```javascript
 const Document = mongoose.model('Document');
 const updateDocument = (req, res) => {
@@ -191,3 +217,14 @@ const updateDocument = (req, res) => {
 ```
 
 ## Contribution
+If you'd like to make an update the module, please make a pull request for imminent review.
+
+### Error Codes
+Prior to adding a new error code, ensure that a synonymous one doesn't already exist in the [error table](#error-table). If it's indeed a new one, either find a relevant category for it (e.g. User errors fall under 200-299) or create a new category and assign a new group of 100 integers.
+
+If applicable, update the [requiredField](https://github.com/IrisVR/iris-error-handler/blob/master/utils/mongodb/errorTypes/requiredField.js) and/or [notFound](https://github.com/IrisVR/iris-error-handler/blob/master/utils/mongodb/errorTypes/notFound.js) dictionaries as necessary.
+
+### Methods
+New methods should be placed in `/utils`; those specific to individual microservices should be placed in `/utils/services`.
+
+All new and/or updated methods should have corresponding unit and integration tests. PRs that lack proper testing will not be accepted.

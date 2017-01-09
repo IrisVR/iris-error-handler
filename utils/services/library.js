@@ -1,3 +1,6 @@
+/**
+ * Ensure the uploaded pano contains required fields
+ */
 function isMissingProperty(pano) {
   return (
     !{}.hasOwnProperty.call(pano, 'owner') ||
