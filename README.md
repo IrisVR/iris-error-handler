@@ -158,7 +158,7 @@ Checks whether the relevant document exists in the database; if so, the document
 
 This method should be placed _directly after_ a database query.
 
-An optional category argument can specify what type of document was(n't) found. If none is provided, the error will default to `160: NotFound`. A dictionary of supported category strings are available [here]() (!!!!!!!!!TODO!!!!!!!!!!).
+An optional category argument can specify what type of document was(n't) found. If none is provided, the error will default to `160: NotFound`. A dictionary of supported category strings are available [here](https://github.com/IrisVR/iris-error-handler/blob/master/utils/mongodb/errorTypes/notFound.js).
 
 ##### Example
 ```javascript
