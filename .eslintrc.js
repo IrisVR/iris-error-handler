@@ -1,9 +1,8 @@
 module.exports = {
-  extends: 'airbnb',
+  extends: 'airbnb-base',
   parser: 'babel-eslint',
   rules: {
     strict: 0,
-    // dynamic require is needed for recursive merging in app/config
     'import/no-dynamic-require': 'off',
     'no-console': 'off',
     'func-names': 'off',
@@ -17,5 +16,9 @@ module.exports = {
     'comma-dangle': 'off',
     'no-undef': 'off',
     'no-confusing-arrow': 'off',
+    'new-cap': 'off',
+    'arrow-body-style': 'off',
+    'no-use-before-define': 'off',
+    'import/no-extraneous-dependencies': 'off'
   },
 };

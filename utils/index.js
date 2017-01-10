@@ -1,4 +1,4 @@
 module.exports = Object.assign({},
   require('./general'),
-  require('./services')
+  require('./mongodb/middleware')
 );

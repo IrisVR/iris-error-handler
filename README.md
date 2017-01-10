@@ -214,16 +214,41 @@ const updateDocument = (req, res) => {
 ```
 
 ## Contribution
-If you'd like to make an update the module, please make a pull request for imminent review.
+If you'd like to contribute, please make a pull request for imminent review.
 
 ### Error Codes
 Prior to adding a new error code, ensure that a synonymous one doesn't already exist in the [error table](#error-table). If it's indeed a new one, either find a relevant category for it (e.g. User errors fall under 200-299) or create a new category and assign a new group of 100 integers.
 
-If applicable, update the [requiredField](https://github.com/IrisVR/iris-error-handler/blob/master/utils/mongodb/errorTypes/requiredField.js) and/or [notFound](https://github.com/IrisVR/iris-error-handler/blob/master/utils/mongodb/errorTypes/notFound.js) dictionaries as necessary.
+If applicable, you may want to update the [requiredField](https://github.com/IrisVR/iris-error-handler/blob/master/utils/mongodb/errorTypes/requiredField.js) and/or [notFound](https://github.com/IrisVR/iris-error-handler/blob/master/utils/mongodb/errorTypes/notFound.js) dictionary.
 
 ### Methods
 New methods should be placed in `/utils`; those specific to individual microservices should be placed in `/utils/services`.
 
 All new and/or updated methods should have corresponding unit and integration tests. PRs that lack proper testing will not be accepted.
 
-## Unit Tests (TODO)
+## Testing
+Unit and integration tests are contained in `/specs`. Make sure to install all dev dependencies required for the testing environment.
+```
+$ git clone https://github.com/IrisVR/iris-error-handler.git
+$ cd iris-error-handler
+$ npm install
+```
+
+Even though this module itself does not require an express or mongo, it _provides support_ for services using that tech stack. As a result, a server and DB must be mocked in testing.
+
+### Running tests
+Run unit tests once
+```
+$ npm test
+```
+
+Run tests on file change
+```
+$ npm run test:watch
+```
+
+### Code coverage
+PRs that fall short of 100% code coverage will be rejected!
+```
+$ npm run coverage
+```

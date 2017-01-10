@@ -218,7 +218,7 @@ module.exports = {
       error_type: 'InvalidEntriesFormat',
       error_message: 'The entries value must be an array'
     }
-  },  
+  },
   350: {
     meta: {
       code: 350,
