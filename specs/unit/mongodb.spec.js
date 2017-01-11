@@ -32,10 +32,6 @@ describe('MongoDB', () => {
         const userWithMissingField = Object.assign({}, user);
         userWithMissingField[f] = undefined;
         return User.create(userWithMissingField)
-          .then((u) => {
-            /* istanbul ignore next */
-            return should.not.exist(u);
-          })
           .catch((e) => {
             const code = mdb._handleValidationError(e);
             Number(code).should.be.equal(expectedCode);
@@ -45,11 +41,7 @@ describe('MongoDB', () => {
 
     it('should not error if required fields are provided', () => {
       return User.create(user)
-        .then(u => should.exist(u._id))
-        .catch((e) => {
-          /* istanbul ignore next */
-          should.not.exist(e);
-        });
+        .then(u => should.exist(u._id));
     });
   });
 
@@ -58,10 +50,6 @@ describe('MongoDB', () => {
       const invalidUser = Object.assign({}, user, { username: 'INVALID_FORMAT' });
       const invalidUserErrorCode = 201;
       return User.create(invalidUser)
-        .then((u) => {
-          /* istanbul ignore next */
-          return should.not.exist(u);
-        })
         .catch((e) => {
           e.should.be.a.Error();
           const code = mdb._handleValidationError(e);
@@ -90,11 +78,7 @@ describe('MongoDB', () => {
       return User.create(user)
         .then(u => User.findById(u._id))
         .then(u => mdb.handleEntityNotFound(u, 'userId'))
-        .then(u => should.exist(u._id))
-        .catch((e) => {
-          /* istanbul ignore next */
-          should.not.exist(e);
-        });
+        .then(u => should.exist(u._id));
     });
   });
 
@@ -104,10 +88,6 @@ describe('MongoDB', () => {
     it('invalid ObjectID should return error code 150', () => {
       const expectedCode = 150;
       return mdb.validateObjectID(invalidObjectId)
-        .then((id) => {
-          /* istanbul ignore next */
-          return should.not.exist(id);
-        })
         .catch((e) => {
           const code = e.message;
           Number(code).should.be.equal(expectedCode);
@@ -116,11 +96,7 @@ describe('MongoDB', () => {
 
     it('should not error and return id if ObjectID is valid', () => {
       return mdb.validateObjectID(validObjectId)
-        .then(id => id.should.equal(validObjectId))
-        .catch((e) => {
-          /* istanbul ignore next */
-          should.not.exist(e);
-        });
+        .then(id => id.should.equal(validObjectId));
     });
   });
 
@@ -137,10 +113,6 @@ describe('MongoDB', () => {
       const expectedCode = 350;
       return Document.findOne({ title })
         .then(mdb.validateOwner(nonOwner))
-        .then((d) => {
-          /* istanbul ignore next */
-          return should.not.exist(d);
-        })
         .catch((e) => {
           const code = e.message;
           Number(code).should.equal(expectedCode);
@@ -150,11 +122,7 @@ describe('MongoDB', () => {
     it('should not error and return document if user is owner', () => {
       return Document.findOne({ title })
         .then(mdb.validateOwner(owner))
-        .then(d => d.owner.username.should.equal(owner.username))
-        .catch((e) => {
-          /* istanbul ignore next */
-          should.not.exist(e);
-        });
+        .then(d => d.owner.username.should.equal(owner.username));
     });
   });
 });

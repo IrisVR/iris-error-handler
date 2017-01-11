@@ -6,8 +6,10 @@
   "scripts": {
     "test": "node_modules/.bin/_mocha specs/**/*.spec.js",
     "test:watch": "npm test -- --watch",
-    "coverage": "istanbul cover node_modules/.bin/_mocha --report lcovonly specs/**/*.spec.js && codecov",
-    "lint": "./node_modules/.bin/eslint ./"
+    "lint": "./node_modules/.bin/eslint ./",
+    "coverage": "nyc npm test",
+    "report-coverage": "nyc report --reporter=lcov > coverage.lcov && codecov",
+    "validate": "npm-run-all --parallel lint coverage"
   },
   "repository": {
     "type": "git",
@@ -28,11 +30,18 @@
     "eslint-config-airbnb-base": "^11.0.1",
     "eslint-plugin-import": "^2.2.0",
     "express": "^4.14.0",
-    "istanbul": "^0.4.5",
+    "ghooks": "^2.0.0",
     "mocha": "^3.2.0",
     "mockgoose": "^6.0.8",
     "mongoose": "^4.7.6",
+    "npm-run-all": "^4.0.0",
+    "nyc": "^10.0.0",
     "should": "^11.1.2",
     "supertest": "^2.0.1"
+  },
+  "config": {
+    "ghooks": {
+      "pre-commit": "npm run validate"
+    }
   }
 }
