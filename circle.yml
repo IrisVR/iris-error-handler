@@ -1,6 +1,6 @@
 machine:
   node:
-    version: 6.9.1
+    version: 6
 
 general:
   branches:
@@ -8,5 +8,7 @@ general:
       - master
 
 test:
+  override:
+    - npm run validate
   post:
     - bash <(curl -s https://codecov.io/bash)
