@@ -4,9 +4,9 @@
   "description": "Resource for internal Iris error codes and middleware",
   "main": "index.js",
   "scripts": {
-    "test": "node_modules/.bin/_mocha specs/**/*.spec.js",
+    "test": "node_modules/.bin/_mocha src/specs/**/*.spec.js",
     "test:watch": "npm test -- --watch",
-    "lint": "./node_modules/.bin/eslint ./",
+    "lint": "./node_modules/.bin/eslint ./src",
     "coverage": "nyc npm test",
     "report-coverage": "nyc report --reporter=lcov > coverage.lcov && codecov",
     "validate": "npm-run-all --parallel lint coverage"
