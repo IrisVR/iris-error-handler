@@ -6,3 +6,7 @@ general:
   branches:
     only:
       - master
+
+test:
+  post:
+    - bash <(curl -s https://codecov.io/bash)
