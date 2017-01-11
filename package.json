@@ -1,7 +1,7 @@
 {
-  "name": "iris-error-codes",
+  "name": "iris-error-handler",
   "version": "1.0.0",
-  "description": "Resource for internal iris error codes",
+  "description": "Resource for internal Iris error codes and middleware",
   "main": "index.js",
   "scripts": {
     "test": "node_modules/.bin/_mocha specs/**/*.spec.js",
@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/IrisVR/iris-error-codes.git"
+    "url": "git+https://github.com/IrisVR/iris-error-handler.git"
   },
   "author": "robin@irisvr.com",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/IrisVR/iris-error-codes/issues"
+    "url": "https://github.com/IrisVR/iris-error-handler/issues"
   },
-  "homepage": "https://github.com/IrisVR/iris-error-codes#readme",
+  "homepage": "https://github.com/IrisVR/iris-error-handler#readme",
   "dependencies": {},
   "devDependencies": {
     "babel-eslint": "^7.1.1",
