@@ -260,7 +260,7 @@ $ npm run validate
 This script uses `npm-run-all --parallel` under the hood to execute the processes simultaneously.
 
 ## Contribution
-If you'd like to contribute, please make a pull request for imminent review.
+If you'd like to contribute, please make a pull request to the `develop` branch for imminent review.
 
 ### Making Changes
 #### Error Codes
@@ -290,14 +290,19 @@ package.json
 
 When the module is require'd, `package.json` will point the user to the relevant entry point at `dist/index.js`.
 
-#### Publish
-Any commit or merge to the `master` branch will run a githook that triggers `npm run validate`, which in turn runs `npm test`, `npm run lint` and `npm run coverage` in parallel. If there is an error at any stage, the commit will be rejected.
+#### Commit
+Committing will run a githook that triggers `npm run validate`, which in turn runs `npm test`, `npm run lint` and `npm run coverage` in parallel. If there is an error at any stage, the commit will be rejected.
 
-It is recommended to use [commitizen](https://github.com/commitizen/cz-cli) for making commits, which is included in the dev dependencies.
+The module uses [commitizen](https://github.com/commitizen/cz-cli) for making commits, which is included in the dev dependencies.
 
 ```
 $ git add .
 $ npm run commit
 ```
 
-This will prompt a CLI to walk you through the changes you made. Once you complete this step, CircleCI will run unit tests, create a release build, create a new tag according to the nature of the update (major, minor or patch), and auto-release the new version to npm. :tada:
+This will prompt a CLI to walk you through the changes you made.
+
+#### Publish
+Once a PR is merged into `develop`, CircleCI will ensure that the codebase is properly tested, linted and covered.
+
+In the case where `develop` is merged into `master`, CirclCI will additionally create a release build, make a new tag according to the nature of the update (major, minor or patch), and auto-release the new version to npm. :tada:
