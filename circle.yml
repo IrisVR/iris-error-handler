@@ -12,3 +12,8 @@ test:
     - npm run validate
   post:
     - npm run report-coverage
+
+deployment:
+  release:
+    commands:
+      - npm run release
