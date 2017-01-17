@@ -12,7 +12,7 @@
     "lint": "./node_modules/.bin/eslint ./src",
     "coverage": "nyc npm test",
     "report-coverage": "cat ./coverage/lcov.info | codecov",
-    "validate": "npm-run-all --parallel lint coverage",
+    "validate": "npm-run-all --parallel lint coverage build",
     "release": "semantic-release pre && npm publish && semantic-release post"
   },
   "repository": {
