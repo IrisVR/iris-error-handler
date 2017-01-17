@@ -1,6 +1,6 @@
 {
   "name": "iris-error-handler",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Resource for internal Iris error codes and middleware",
   "main": "dist/index.js",
   "scripts": {
