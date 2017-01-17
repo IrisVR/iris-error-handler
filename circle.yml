@@ -15,6 +15,7 @@ test:
     - npm run report-coverage
 
 deployment:
-  branch: [master]
-  commands:
-    - npm run release
+  production:
+    branch: [master]
+    commands:
+      - npm run release
