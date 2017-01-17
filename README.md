@@ -294,7 +294,7 @@ When the module is require'd, `package.json` will point the user to the relevant
 The module uses [commitizen](https://github.com/commitizen/cz-cli) for making commits, which is included in the dev dependencies.
 
 ```
-$ git add .
+$ git add -A
 $ npm run commit
 ```
 
