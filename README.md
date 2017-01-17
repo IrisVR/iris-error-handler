@@ -1,9 +1,12 @@
 # Iris Error Handler
 Error handling middleware for IrisVR microservices.
 
-Compatible with Node.js + Express apps only, with an optional MongoDB backend.
+Compatible with Node.js + Express apps, with an optional MongoDB backend.
 
-## Installation (TODO: ACTUALLY PUBLISH ON NPM)
+[![CircleCI](https://img.shields.io/circleci/project/github/IrisVR/iris-error-handler.svg?style=flat-square)](https://circleci.com/gh/IrisVR/iris-error-handler)
+[![Codecov](https://img.shields.io/codecov/c/github/IrisVR/iris-error-handler.svg?style=flat-square)](https://codecov.io/gh/IrisVR/iris-error-handler)
+
+## Installation
 ```
 $ npm install iris-error-handler --save
 ```
@@ -215,6 +218,8 @@ const updateDocument = (req, res) => {
 
 ## Contribution
 If you'd like to contribute, please make a pull request for imminent review.
+
+Any commit to the `master` branch will run a githook that triggers `npm run validate`, which in turn runs `npm test`, `npm run lint` and `npm run coverage` in parallel.
 
 ### Error Codes
 Prior to adding a new error code, ensure that a synonymous one doesn't already exist in the [error table](#error-table). If it's indeed a new one, either find a relevant category for it (e.g. User errors fall under 200-299) or create a new category and assign a new group of 100 integers.
