@@ -291,8 +291,6 @@ package.json
 When the module is require'd, `package.json` will point the user to the relevant entry point at `dist/index.js`.
 
 #### Commit
-Committing will run a githook that triggers `npm run validate`, which in turn runs `npm test`, `npm run lint` and `npm run coverage` in parallel. If there is an error at any stage, the commit will be rejected.
-
 The module uses [commitizen](https://github.com/commitizen/cz-cli) for making commits, which is included in the dev dependencies.
 
 ```
@@ -300,7 +298,9 @@ $ git add .
 $ npm run commit
 ```
 
-This will prompt a CLI to walk you through the changes you made.
+This will prompt a CLI to walk you through the changes you made. *Only a commit type of `feat` or `fix` will trigger an update to the published npm module;* other types such as `refactor` and `style` will not be a release as they don't change anything from the user's perspective.
+
+Committing will run a githook that triggers `npm run validate`, which in turn runs `npm test`, `npm run lint` and `npm run coverage` in parallel. If there is an error at any stage, the commit will be rejected.
 
 #### Publish
 Once a PR is merged into `develop`, CircleCI will ensure that the codebase is properly tested, linted and covered.
