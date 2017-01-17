@@ -305,4 +305,4 @@ Committing will run a githook that triggers `npm run validate`, which in turn ru
 #### Publish
 Once a PR is merged into `develop`, CircleCI will ensure that the codebase is properly tested, linted and covered.
 
-In the case where `develop` is merged into `master`, CirclCI will additionally create a release build, make a new tag according to the nature of the update (major, minor or patch), and auto-release the new version to npm. :tada:
+In the case where `develop` is merged into `master`, CirclCI will additionally create a release build, make a new tag according to the nature of the update (major, minor or patch), and auto-release the new version to npm.
