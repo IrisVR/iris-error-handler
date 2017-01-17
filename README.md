@@ -1,17 +1,23 @@
 # Iris Error Handler
 Error handling middleware for IrisVR microservices.
 
+1. [Getting Started](#getting-started)
+2. [Error Table](#error-table)
+3. [API](#api)
+4. [Testing](#testing)
+5. [Contribution](#contribution)
+
 Compatible with Node.js + Express apps, with an optional MongoDB backend.
 
 [![CircleCI](https://img.shields.io/circleci/project/github/IrisVR/iris-error-handler.svg?style=flat-square)](https://circleci.com/gh/IrisVR/iris-error-handler)
 [![Codecov](https://img.shields.io/codecov/c/github/IrisVR/iris-error-handler.svg?style=flat-square)](https://codecov.io/gh/IrisVR/iris-error-handler)
 
-## Installation
+## Getting started
+### Installation
 ```
 $ npm install iris-error-handler --save
 ```
-
-## Initialization
+### Initialization
 ```javascript
 const errorHandler = require('iris-error-handler');
 ```
@@ -216,21 +222,6 @@ const updateDocument = (req, res) => {
 }
 ```
 
-## Contribution
-If you'd like to contribute, please make a pull request for imminent review.
-
-Any commit to the `master` branch will run a githook that triggers `npm run validate`, which in turn runs `npm test`, `npm run lint` and `npm run coverage` in parallel.
-
-### Error Codes
-Prior to adding a new error code, ensure that a synonymous one doesn't already exist in the [error table](#error-table). If it's indeed a new one, either find a relevant category for it (e.g. User errors fall under 200-299) or create a new category and assign a new group of 100 integers.
-
-If applicable, you may want to update the [requiredField](https://github.com/IrisVR/iris-error-handler/blob/master/utils/mongodb/errorTypes/requiredField.js) and/or [notFound](https://github.com/IrisVR/iris-error-handler/blob/master/utils/mongodb/errorTypes/notFound.js) dictionary.
-
-### Methods
-New methods should be placed in `/utils`; those specific to individual microservices should be placed in `/utils/services`.
-
-All new and/or updated methods should have corresponding unit and integration tests. PRs that lack proper testing will not be accepted.
-
 ## Testing
 Unit and integration tests are contained in `/specs`. Make sure to install all dev dependencies required for the testing environment.
 ```
@@ -239,7 +230,12 @@ $ cd iris-error-handler
 $ npm install
 ```
 
-Even though this module itself does not require an express or mongo, it _provides support_ for services using that tech stack. As a result, a server and DB must be mocked in testing.
+Even though this module itself does not require Express or Mongo, it _provides support_ for services using that tech stack. As a result, a server and DB must be mocked in testing.
+
+### Linting
+```
+$ npm run lint
+```
 
 ### Running tests
 Run unit tests once
@@ -253,7 +249,60 @@ $ npm run test:watch
 ```
 
 ### Code coverage
-PRs that fall short of 100% code coverage will be rejected!
 ```
 $ npm run coverage
 ```
+
+### All of the above
+```
+$ npm run validate
+```
+This script uses `npm-run-all --parallel` under the hood to execute the processes simultaneously.
+
+## Contribution
+If you'd like to contribute, please make a pull request to the `develop` branch for imminent review.
+
+### Making Changes
+#### Error Codes
+Prior to adding a new error code, ensure that a synonymous one doesn't already exist in the [error table](#error-table). If it's indeed a new one, either find a relevant category for it (e.g. User errors fall under 200-299) or create a new category and assign a new group of 100 integers.
+
+If applicable, you may want to update the [requiredField](https://github.com/IrisVR/iris-error-handler/blob/master/utils/mongodb/errorTypes/requiredField.js) and/or [notFound](https://github.com/IrisVR/iris-error-handler/blob/master/utils/mongodb/errorTypes/notFound.js) dictionary.
+
+####  Methods
+New methods should be placed in `/utils`; those specific to individual microservices should be placed in `/utils/services`. All new and/or updated methods should have corresponding unit and integration tests.
+
+### Committing and Releasing
+To release updates, you must be part of the [IrisVR NPM Organization](https://www.npmjs.com/org/irisvr).
+
+#### Preview
+To preview the contents of the npm module prior to publishing:
+```
+$ npm pack
+```
+
+This will create the tar zip file that would be served by npm. You can unzip it and explore its contents, which should consist of the following:
+```
+dist/
+LICENSE
+README.md
+package.json
+```
+
+When the module is require'd, `package.json` will point the user to the relevant entry point at `dist/index.js`.
+
+#### Commit
+Committing will run a githook that triggers `npm run validate`, which in turn runs `npm test`, `npm run lint` and `npm run coverage` in parallel. If there is an error at any stage, the commit will be rejected.
+
+The module uses [commitizen](https://github.com/commitizen/cz-cli) for making commits, which is included in the dev dependencies.
+
+```
+$ git add .
+$ npm run commit
+```
+
+This will prompt a CLI to walk you through the changes you made.
+
+#### Publish
+Once a PR is merged into `develop`, CircleCI will ensure that the codebase is properly tested, linted and covered.
+
+In the case where `develop` is merged into `master`, CirclCI will additionally create a release build, make a new tag according to the nature of the update (major, minor or patch), and auto-release the new version to npm. :tada:

@@ -6,10 +6,16 @@ general:
   branches:
     only:
       - master
+      - develop
 
 test:
   override:
     - npm run validate
   post:
     - npm run report-coverage
-    - npm run release
+
+deployment:
+  production:
+    branch: [master]
+    commands:
+      - npm run release
