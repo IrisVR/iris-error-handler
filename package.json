@@ -10,7 +10,7 @@
     "test:watch": "npm test -- --watch",
     "lint": "./node_modules/.bin/eslint ./src",
     "coverage": "nyc npm test",
-    "report-coverage": "nyc report --reporter=lcov > coverage.lcov && codecov",
+    "report-coverage": "cat ./coverage/lcov.info | codecov",
     "validate": "npm-run-all --parallel lint coverage"
   },
   "repository": {

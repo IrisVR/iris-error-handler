@@ -11,4 +11,4 @@ test:
   override:
     - npm run validate
   post:
-    - bash <(curl -s https://codecov.io/bash)
+    - npm run report-coverage
