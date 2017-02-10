@@ -22,8 +22,22 @@ module.exports = {
       error_message: 'There was an error with the Chargebee service',
     },
   },
+  20: {
+    meta: {
+      code: 20,
+      error_type: 'S3UploadError',
+      error_message: 'Failed to upload file to AWS S3'
+    }
+  },
+  21: {
+    meta: {
+      code: 21,
+      error_type: 'S3DownloadError',
+      error_message: 'Failed to download file from AWS S3'
+    }
+  },
 
-  /* Request header errors */
+  /* General request errors */
   100: {
     meta: {
       code: 100,
@@ -52,6 +66,27 @@ module.exports = {
       error_message: 'The API key is missing, is invalid, or was revoked'
     }
   },
+  120: {
+    meta: {
+      code: 120,
+      error_type: 'MissingRequiredField',
+      error_message: 'At least one required field is missing in the request'
+    }
+  },
+  121: {
+    meta: {
+      code: 121,
+      error_type: 'InvalidJSON',
+      error_message: 'Failed to parse incoming JSON string'
+    }
+  },
+  122: {
+    meta: {
+      code: 122,
+      error_type: 'HTTPOutgoingRequestError',
+      error_message: 'Outgoing client request failed to execute'
+    }
+  },
 
   /* MongoDB Errors */
   150: {
@@ -68,7 +103,27 @@ module.exports = {
       error_message: 'The document does not exist in our database',
     },
   },
-
+  170: {
+    meta: {
+      code: 170,
+      error_type: 'FailedFind',
+      error_message: 'The MongoDB find query failed'
+    }
+  },
+  171: {
+    meta: {
+      code: 171,
+      error_type: 'FailedInsert',
+      error_message: 'The MongoDB insertion failed'
+    }
+  },
+  172: {
+    meta: {
+      code: 172,
+      error_type: 'FailedCount',
+      error_message: 'The MongoDB count query failed'
+    }
+  },
   /* User errors */
   200: {
     meta: {
@@ -141,7 +196,7 @@ module.exports = {
     }
   },
 
-  /* Pano errors */
+  /* Library and image errors */
   300: {
     meta: {
       code: 300,
@@ -231,6 +286,27 @@ module.exports = {
       code: 360,
       error_type: 'ThumbnailError',
       error_message: 'There was an error generating the thumbnail'
+    }
+  },
+  361: {
+    meta: {
+      code: 361,
+      error_type: 'LocalOSFileCreationOrOpeningError',
+      error_message: 'OS failed to create or open file in local system'
+    }
+  },
+  362: {
+    meta: {
+      code: 362,
+      error_type: 'StatsCalcError',
+      error_message: 'MongoDB aggregation pipeline failed'
+    }
+  },
+  365: {
+    meta: {
+      code: 365,
+      error_type: 'ImageTransformationError',
+      error_message: 'Failed to transform image'
     }
   },
   370: {
