@@ -6,7 +6,6 @@ module.exports = {
       error_message: 'An unknown error occurred'
     }
   },
-
   /* Third-party errors */
   10: {
     meta: {
